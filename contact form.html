@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERPOL Contact Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0A1C4A;
+            color: #FFFFFF;
+        }
+
+        /* Header Styles */
+        .interpol-header {
+            background-color: #001D82;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #FF0000;
+        }
+
+        .interpol-logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        /* Form Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #0A1C4A;
+            border: 1px solid #001D82;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background-color: #0A1C4A;
+            border: 1px solid #001D82;
+            color: white;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #FF0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #FF0000;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        /* Email Signature Styles */
+        .email-signature {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #001D82;
+            border-radius: 5px;
+        }
+
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .signature-table td {
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .disclaimer {
+            font-size: 0.8em;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #001D82;
+            border-left: 4px solid #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <header class="interpol-header">
+        <img src="placeholder.jpg" alt="INTERPOL Logo" class="interpol-logo">
+        <h1>INTERPOL Contact Form</h1>
+    </header>
+
+    <section class="contact-form">
+        <form id="interpol-contact-form" action="#" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <div id="name-error" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="email-error" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <select id="subject" name="subject">
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="crime-report">Crime Report</option>
+                    <option value="request">Information Request</option>
+                </select>
+                <div id="subject-error" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                <div id="message-error" class="error"></div>
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section class="email-signature">
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <p><strong>INTERPOL</strong></p>
+                    <p>International Criminal Police Organization</p>
+                    <p>Lyons, France</p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="disclaimer">
+            <p><strong>CONFIDENTIALITY NOTICE:</strong> This email and any attachments are confidential and intended solely for the addressee. If you are not the intended recipient, please notify the sender immediately.</p>
+            <p><strong>SECURITY WARNING:</strong> This email has been scanned for viruses. Attachments may contain malware.</p>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('interpol-contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error').forEach(element => {
+                element.textContent = '';
+            });
+
+            // Name validation
+            const name = document.getElementById('name').value;
+            if (!name) {
+                document.getElementById('name-error').textContent = 'Name is required.';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                document.getElementById('email-error').textContent = 'Email is required.';
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+
+            // Subject validation
+            const subject = document.getElementById('subject').value;
+            if (!subject) {
+                document.getElementById('subject-error').textContent = 'Please select a subject.';
+                isValid = false;
+            }
+
+            // Message validation
+            const message = document.getElementById('message').value;
+            if (!message) {
+                document.getElementById('message-error').textContent = 'Message is required.';
+                isValid = false;
+            } else if (message.length < 10) {
+                document.getElementById('message-error').textContent = 'Message should be at least 10 characters long.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+                this.reset();
+            }
+        });
+    </script>
+</body>
+</html>
